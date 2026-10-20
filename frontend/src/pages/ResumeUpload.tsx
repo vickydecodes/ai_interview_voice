@@ -11,7 +11,6 @@ import {
   UploadCloud,
   FileText,
   CheckCircle2,
-  Plus,
   Trash2,
   Sparkles,
   ArrowRight,
@@ -94,10 +93,6 @@ export const ResumeUpload: React.FC = () => {
   const [profile, setProfile] = useState<ParsedProfile | null>(null);
   const [isLoadingProfile, setIsLoadingProfile] = useState(true);
 
-  // New skill input state
-  const [newSkillName, setNewSkillName] = useState("");
-  const [newSkillProf, setNewSkillProf] = useState(3);
-  const [newSkillCategory, setNewSkillCategory] = useState("General");
 
   // Load existing profile if any
   useEffect(() => {
@@ -185,28 +180,6 @@ export const ResumeUpload: React.FC = () => {
     await handleFile(sampleFile);
   };
 
-  const handleAddSkill = () => {
-    if (!profile || !newSkillName.trim()) return;
-    const exists = profile.skills.some((s) => s.name.toLowerCase() === newSkillName.trim().toLowerCase());
-    if (exists) {
-      toast.warning("This skill is already in your profile.");
-      return;
-    }
-
-    const updatedSkills: SkillItem[] = [
-      ...profile.skills,
-      {
-        name: newSkillName.trim(),
-        proficiency: newSkillProf,
-        category: newSkillCategory || "General",
-      },
-    ];
-
-    setProfile({ ...profile, skills: updatedSkills });
-    setNewSkillName("");
-    setNewSkillProf(3);
-    toast.success(`Added ${newSkillName.trim()} (Level ${newSkillProf})`);
-  };
 
   const handleRemoveSkill = (skillIndex: number) => {
     if (!profile) return;
@@ -245,14 +218,11 @@ export const ResumeUpload: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-              Resume Vault & Skill Profile
+              Resume Parser & Skill Profiler
             </h1>
-            <Badge variant="tier">
-              Phase 2
-            </Badge>
           </div>
           <p className="text-sm text-slate-600 mt-1">
-            Upload your resume to extract verified skills and unlock company tiers in the interview campaign.
+            Upload your resume to extract skills, experience, and projects for target company matching and voice interview simulations.
           </p>
         </div>
 
@@ -341,9 +311,9 @@ export const ResumeUpload: React.FC = () => {
                 <CheckCircle2 className="h-5 w-5 text-emerald-600" />
               </div>
               <div>
-                <h2 className="text-xl font-extrabold text-slate-900">Verified Player Profile</h2>
+                <h2 className="text-xl font-extrabold text-slate-900">Parsed Candidate Profile</h2>
                 <p className="text-xs text-slate-500">
-                  Review and refine your skills before calculating company unlocks.
+                  Review and refine your skills before company interview matching.
                 </p>
               </div>
             </div>
@@ -355,7 +325,7 @@ export const ResumeUpload: React.FC = () => {
               className="gap-2"
             >
               <Save className="h-4 w-4" />
-              <span>{isSaving ? "Saving..." : "Confirm & View Level Map"}</span>
+              <span>{isSaving ? "Saving..." : "Save Profile & Select Target Company"}</span>
               <ArrowRight className="h-4 w-4" />
             </Button>
           </div>
@@ -373,9 +343,9 @@ export const ResumeUpload: React.FC = () => {
             </Card>
 
             <Card className="p-4 border-slate-200 bg-white">
-              <div className="text-xs text-slate-500 uppercase font-bold">Seniority Tier</div>
+              <div className="text-xs text-slate-500 uppercase font-bold">Seniority Level</div>
               <div className="flex items-center gap-2 mt-1">
-                <Badge variant="xp" className="text-xs">
+                <Badge variant="default" className="text-xs">
                   {profile.seniority}
                 </Badge>
               </div>
@@ -416,65 +386,15 @@ export const ResumeUpload: React.FC = () => {
                 <div>
                   <CardTitle className="text-lg flex items-center gap-2 text-slate-900">
                     <Award className="h-5 w-5 text-blue-600" />
-                    <span>Skills & Proficiency Matrix (1 to 5)</span>
+                    <span>Extracted Technical Skills & Analyzed Proficiency</span>
                   </CardTitle>
                   <CardDescription className="text-xs text-slate-500">
-                    Companies require minimum skill proficiencies. Click the stars or badges to calibrate your level.
+                    All skills, frameworks, and architecture tools automatically analyzed from your resume.
                   </CardDescription>
                 </div>
               </div>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Add Skill Bar */}
-              <div className="flex flex-col sm:flex-row items-center gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <Input
-                  placeholder="Add skill (e.g. Docker, GraphQL, Kubernetes)..."
-                  value={newSkillName}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewSkillName(e.target.value)}
-                  className="h-9 text-xs bg-white"
-                />
-                <select
-                  value={newSkillCategory}
-                  onChange={(e) => setNewSkillCategory(e.target.value)}
-                  className="h-9 rounded-lg border border-slate-300 bg-white px-3 text-xs text-slate-700 font-medium shadow-xs"
-                >
-                  <option value="Languages">Languages</option>
-                  <option value="Frontend">Frontend</option>
-                  <option value="Backend">Backend</option>
-                  <option value="Databases">Databases</option>
-                  <option value="Cloud & DevOps">Cloud & DevOps</option>
-                  <option value="Architecture">Architecture</option>
-                  <option value="General">General</option>
-                </select>
-                <div className="flex items-center gap-1 px-2">
-                  <span className="text-xs text-slate-600 font-semibold whitespace-nowrap">Level:</span>
-                  {[1, 2, 3, 4, 5].map((lvl) => (
-                    <button
-                      key={lvl}
-                      type="button"
-                      onClick={() => setNewSkillProf(lvl)}
-                      className={`h-7 w-7 rounded-md flex items-center justify-center text-xs font-bold cursor-pointer transition-colors ${
-                        newSkillProf >= lvl
-                          ? "bg-blue-600 text-white shadow-xs"
-                          : "bg-white text-slate-600 border border-slate-300 hover:bg-slate-100"
-                      }`}
-                    >
-                      {lvl}
-                    </button>
-                  ))}
-                </div>
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="game"
-                  onClick={handleAddSkill}
-                  className="w-full sm:w-auto text-xs whitespace-nowrap"
-                >
-                  <Plus className="h-3.5 w-3.5 mr-1" />
-                  Add Skill
-                </Button>
-              </div>
-
               {/* Skills Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {profile.skills.map((skill, idx) => (
@@ -611,7 +531,7 @@ export const ResumeUpload: React.FC = () => {
               className="gap-2"
             >
               <Save className="h-4 w-4" />
-              <span>{isSaving ? "Saving..." : "Confirm Profile & Calculate Unlocks"}</span>
+              <span>{isSaving ? "Saving..." : "Save Profile & Select Target Company"}</span>
               <ArrowRight className="h-4 w-4" />
             </Button>
           </div>

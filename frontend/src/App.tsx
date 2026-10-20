@@ -4,8 +4,10 @@ import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { Navbar } from "@/components/Navbar";
 import { Login } from "@/pages/Login";
 import { Register } from "@/pages/Register";
-import { LevelMap } from "@/pages/LevelMap";
+import { CompanySelect } from "@/pages/CompanySelect";
 import { ResumeUpload } from "@/pages/ResumeUpload";
+import { InterviewRoom } from "@/pages/InterviewRoom";
+import { InterviewReport } from "@/pages/InterviewReport";
 import { Toaster } from "sonner";
 import { Loader2 } from "lucide-react";
 
@@ -32,8 +34,10 @@ const ProtectedLayout: React.FC = () => {
       <Navbar />
       <main className="flex-1 pb-16">
         <Routes>
-          <Route path="/" element={<LevelMap />} />
+          <Route path="/" element={<CompanySelect />} />
           <Route path="/resume" element={<ResumeUpload />} />
+          <Route path="/interview/:companyId" element={<InterviewRoom />} />
+          <Route path="/interview/:interviewId/report" element={<InterviewReport />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>

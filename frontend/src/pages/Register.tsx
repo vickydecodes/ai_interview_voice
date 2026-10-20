@@ -40,18 +40,18 @@ export const Register: React.FC = () => {
             <Flame className="h-7 w-7 text-white" />
           </div>
           <h1 className="text-3xl font-black tracking-tight text-slate-900">
-            Join the Challenge
+            Create Your Account
           </h1>
           <p className="text-sm text-slate-600">
-            Upload your resume, unlock tech company tiers, and practice live voice interviews.
+            Upload your resume, select target companies, and practice live voice interviews.
           </p>
         </div>
 
         <Card className="border-slate-200 bg-white shadow-xl">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-xl font-bold text-slate-900">Create Player Account</CardTitle>
+            <CardTitle className="text-xl font-bold text-slate-900">Candidate Registration</CardTitle>
             <CardDescription className="text-slate-500 text-xs">
-              Start at Level 1, earn XP, and unlock top-tier tech companies.
+              Create your profile to parse your resume and start interview sessions.
             </CardDescription>
           </CardHeader>
           <form onSubmit={handleSubmit}>
@@ -107,11 +107,11 @@ export const Register: React.FC = () => {
                 {isSubmitting ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    <span>Creating Character...</span>
+                    <span>Creating Account...</span>
                   </>
                 ) : (
                   <>
-                    <span>Start Level 1 Journey</span>
+                    <span>Create Account & Get Started</span>
                     <ArrowRight className="h-4 w-4" />
                   </>
                 )}

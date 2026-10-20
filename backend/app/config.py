@@ -19,7 +19,9 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440
 
     # LLM Settings
-    LLM_PROVIDER: str = "claude"  # "claude", "openai", "gemini", "mock"
+    LLM_PROVIDER: str = "openrouter"  # "openrouter", "claude", "openai", "gemini", "mock"
+    OPENROUTER_API_KEY: str = ""
+    LLM_MODEL: str = "nvidia/nemotron-3.5-lightning:free"
     ANTHROPIC_API_KEY: str = ""
     OPENAI_API_KEY: str = ""
     GEMINI_API_KEY: str = ""

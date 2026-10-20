@@ -44,18 +44,18 @@ export const Login: React.FC = () => {
             <Flame className="h-7 w-7 text-white" />
           </div>
           <h1 className="text-3xl font-black tracking-tight text-slate-900">
-            LevelUp <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Interview</span>
+            AI Voice <span className="text-blue-600">Interview</span>
           </h1>
           <p className="text-sm text-slate-600">
-            Climb the company tiers, unlock levels, and master AI voice interviews.
+            Resume parsing, target company matching, and real-time AI voice interview preparation.
           </p>
         </div>
 
         <Card className="border-slate-200 bg-white shadow-xl">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-xl font-bold text-slate-900">Sign In to Your Candidate Profile</CardTitle>
+            <CardTitle className="text-xl font-bold text-slate-900">Sign In to Your Account</CardTitle>
             <CardDescription className="text-slate-500 text-xs">
-              Enter your credentials to resume your interview campaign.
+              Enter your credentials to access your resume and interview sessions.
             </CardDescription>
           </CardHeader>
           <form onSubmit={handleSubmit}>

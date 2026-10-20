@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.database import connect_to_mongo, close_mongo_connection
-from app.routers import auth, resume
+from app.routers import auth, resume, companies, interviews
 
 # Configure logging
 logging.basicConfig(
@@ -46,6 +46,8 @@ app.add_middleware(
 # Mount routers
 app.include_router(auth.router)
 app.include_router(resume.router)
+app.include_router(companies.router)
+app.include_router(interviews.router)
 
 
 @app.get("/api/health")

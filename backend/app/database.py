@@ -31,9 +31,31 @@ async def connect_to_mongo():
         await db_instance.db.interviews.create_index("user_id")
         await db_instance.db.reports.create_index("interview_id", unique=True)
         await db_instance.db.recommendations_cache.create_index([("company_id", 1), ("skill_name", 1)], unique=True)
+
+        # Seed companies if empty
+        await seed_default_companies()
     except Exception as e:
         logger.error(f"Failed to connect to MongoDB: {e}")
         raise e
+
+
+async def seed_default_companies():
+    from app.seed_data import COMPANIES_SEED_DATA
+    col = db_instance.db["companies"]
+    count = await col.count_documents({})
+    if count == 0:
+        logger.info(f"Seeding {len(COMPANIES_SEED_DATA)} default tech companies...")
+        await col.insert_many(COMPANIES_SEED_DATA)
+        logger.info("Company seeding completed successfully.")
+    else:
+        # Update or upsert so any tweaks in seed data stay in sync
+        for comp in COMPANIES_SEED_DATA:
+            await col.update_one(
+                {"company_id": comp["company_id"]},
+                {"$set": comp},
+                upsert=True
+            )
+        logger.info(f"Verified {len(COMPANIES_SEED_DATA)} companies in database.")
 
 
 async def close_mongo_connection():
