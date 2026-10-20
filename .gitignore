@@ -1,0 +1,36 @@
+# Node / Frontend dependencies & build outputs
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Python / Backend caches & environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+backend/venv/
+backend/.venv/
+
+# Environment files & secret keys
+.env
+backend/.env
+frontend/.env
+*.local
+
+# Python build & packaging artifacts
+*.egg-info/
+backend/*.egg-info/
+dist/
+build/
+
+# TypeScript build info
+*.tsbuildinfo
+frontend/*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
+.gemini
+*_backup.docx
+
